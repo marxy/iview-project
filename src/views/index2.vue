@@ -13,6 +13,16 @@
         top: 15px;
         left: 20px;
     }
+    .layout-info{
+        width: 100px;
+        height: 60px;
+        background: #fff;
+        border-radius: 3px;
+        float: right;
+        position: relative;
+        top: 15px;
+        right: 20px;
+    }
     .layout-header{
         height: 100px;
         background: #5b6270;
@@ -39,83 +49,59 @@
     }
     .layout-content-main{
         padding: 10px;
+        min-height: 400px;
     }
     .layout-copy{
         text-align: center;
         padding: 10px 0 20px;
         color: #9ea7b4;
     }
+    .component-content{
+        overflow-y: scroll;
+    }
+    .layout-menu{
+        min-height: 400px;
+    }
 </style>
 <template>
     <div class="layout">
         <div class="layout-header">
             <div class="layout-logo"></div>
+            <div class="layout-info"></div>
         </div>
 
         <div class="layout-content">
             <Row>
                 <i-col span="5">
-                    <Menu  width="auto">
-                        <Submenu v-for="(item,index) in menus" :key="index" :name="index">
-                            <template slot="title">
-                                <Icon v-bind:type="item.icon"></Icon>
-                                {{item.name}}
-                            </template>
-                            <Menu-item  v-for="(c,i) in item.child" :key="index + '-' + i" :name="index + '-' + i">{{c.name}}</Menu-item>
-                        </Submenu>
-                    </Menu>
+                    <div class="layout-menu">
+                        <Menu  width="auto" @on-select="handleTabsAdd" theme="dark">
+                            <Submenu v-for="(item,index) in menus" :key="index" :name="index">
+                                <template slot="title">
+                                    <Icon v-bind:type="item.icon"></Icon>
+                                    {{item.title}}
+                                </template>
+                                <Menu-item  v-for="(c,i) in item.child"  :key="index + '-' + i" :name="c.title"  >{{c.title}}</Menu-item>
+                            </Submenu>
+                        </Menu>
+                    </div>
+
                 </i-col>
                 <i-col span="19">
                     <div class="layout-content-main">
                         <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
                             <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
+                            <div class="component-content">
                                 <component v-bind:is="tab.content">
                                   <!-- 组件在 vm.currentview 变化时改变！ -->
                                 </component>
+                            </div>
                             </Tab-pane>
-                            <Button type="ghost" @click="handleTabsAdd" size="small" slot="extra" >增加</Button>
                         </Tabs>
                     </div>
                 </i-col>
             </Row>
         </div>
-
-        <!-- <div class="layout-content">
-            <Row>
-                <i-col span="5">
-                    <Menu active-name="1-2" width="auto" :open-names="['1']">
-                        <Submenu name="1">
-                            <template slot="title">
-                                <Icon type="ios-navigate"></Icon>
-                                导航一
-                            </template>
-                            <Menu-item name="1-1">选项 1</Menu-item>
-                            <Menu-item name="1-2">选项 2</Menu-item>
-                            <Menu-item name="1-3">选项 3</Menu-item>
-                        </Submenu>
-                        <Submenu name="2">
-                            <template slot="title">
-                                <Icon type="ios-keypad"></Icon>
-                                导航二
-                            </template>
-                            <Menu-item name="2-1">选项 1</Menu-item>
-                            <Menu-item name="2-2">选项 2</Menu-item>
-                        </Submenu>
-                        <Submenu name="3">
-                            <template slot="title">
-                                <Icon type="ios-analytics"></Icon>
-                                导航三
-                            </template>
-                            <Menu-item name="3-1">选项 1</Menu-item>
-                            <Menu-item name="3-2">选项 2</Menu-item>
-                        </Submenu>
-                    </Menu>
-                </i-col>
-                <i-col span="19">
-                    <div class="layout-content-main">内容区域</div>
-                </i-col>
-            </Row>
-        </div> -->
+        <Back-top :height="100"></Back-top>
         <div class="layout-copy">
             2012-2017 &copy; PJBEST
         </div>
@@ -125,6 +111,7 @@
     import Vue from 'vue';
     import contentComponent from './content.vue'
     import contentComponent2 from './content2.vue'
+    import tableComponent from './table.vue'
 
     export default {
         
@@ -132,53 +119,63 @@
             return {
                 menus:[
                     {
-                        name:'导航一',
+                        title:'工单管理',
+                        name:'woManage',
                         icon:'ios-navigate',
                         child:[
                             {
-                                name:'选项1',
+                                title:'创建工单',
+                                name:'woCreate',
                                 icon:'',
                                 child:{}
                             },
                             {
-                                name:'选项2',
+                                title:'工单查询',
+                                name:'woSearch',
                                 icon:'',
                                 child:{}
                             },
                             {
-                                name:'选项3',
+                                title:'工单导出',
+                                name:'woExport',
                                 icon:'',
                                 child:{}
                             }
                         ]
                     },
                     {
-                        name:'导航二',
+                        title:'信息管理',
+                        name:'infoManage',
                         icon:'ios-keypad',
                         child:[
                             {
-                                name:'选项1',
+                                title:'用户管理',
+                                name:'userManage',
                                 icon:'',
                                 child:{}
                             },
                             {
-                                name:'选项2',
+                                title:'分类管理',
+                                name:'calassifyManage',
                                 icon:'',
                                 child:{}
                             }
                         ]
                     },
                     {
-                        name:'导航三',
+                        title:'配置管理',
+                        name:'cfgManage',
                         icon:'ios-analytics',
                         child:[
                             {
-                                name:'选项1',
+                                title:'数据配置',
+                                name:'dataCfg',
                                 icon:'',
                                 child:{}
                             },
                             {
-                                name:'选项2',
+                                title:'日志配置',
+                                name:'logCfg',
                                 icon:'',
                                 child:{}
                             }
@@ -188,46 +185,53 @@
                 tabs:[
                     {
                         title:'工单提醒',
-                        name:'',
+                        name:'woRemaind',
                         content:'contentView1',
                         closable:false
-                    },
-                    {
-                        title:'创建工单0',
-                        name:'',
-                        content:'contentView2',
-                        closable:true
-                    },
-                    {
-                        title:'创建工单1',
-                        name:'',
-                        content:'contentView1',
-                        closable:true
                     }
                 ],
-                tabIndex:2
+                woCreateTabIndex:0
             }
         },
         components:{
             contentView1:contentComponent,
-            contentView2:contentComponent2
+            contentView2:contentComponent2,
+            '创建工单1':tableComponent,
+            '创建工单2':contentComponent2,
         },
         methods: {
-            handleTabsAdd () {
+            handleTabsAdd(name) {
                 //var cur = this.tabs;
-                var curView = Math.floor(Math.random()*2) + 1;
-                window.console.log(this.tabs);
-                var tab = {
-                        title:'创建工单' + this.tabIndex,
+                //window.console.log(name);
+                let curView = Math.floor(Math.random()*2) + 1;
+                let tab;
+                if (name === "创建工单" ) {
+                    tab = {
+                        title:name + this.woCreateTabIndex,
+                        name:'woCreate',
+                        content:name + curView,
+                        closable:true
+                    };
+                    this.woCreateTabIndex++;
+                }else{
+                    //不能重复添加
+                    for (let i = this.tabs.length - 1; i >= 0; i--) {
+                        if ( name === this.tabs[i].title) {
+                            return;
+                        }
+                    }
+                    tab = {
+                        title:name,
                         name:'',
                         content:'contentView' + curView,
                         closable:true
-                    }
+                    };
+                }
+                
                 this.tabs.push(tab);
-                this.tabIndex++;
             },
             handleTabRemove (name) {
-                for (var i = this.tabs.length - 1; i >= 0; i--) {
+                for (let i = this.tabs.length - 1; i >= 0; i--) {
                     if (this.tabs[i].title === name) {
                         this.tabs.splice(i,1);
                         break;
@@ -239,7 +243,7 @@
         },
         computed:{
             activeTab:function(){
-                var active;
+                let active;
                 active = this.tabs[this.tabs.length-1].title;
                 window.console.log(active);
                 return active;
