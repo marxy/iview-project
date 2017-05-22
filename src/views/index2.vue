@@ -49,7 +49,8 @@
     }
     .layout-content-main{
         padding: 10px;
-        min-height: 400px;
+        /* min-height: 400px; */
+        height: 800px;
     }
     .layout-copy{
         text-align: center;
@@ -57,10 +58,14 @@
         color: #9ea7b4;
     }
     .component-content{
+        /* overflow-y: scroll; */
         overflow-y: scroll;
+
+        height: 740px;
     }
     .layout-menu{
-        min-height: 400px;
+        background: #464c5b;
+        height: 800px;
     }
 </style>
 <template>
@@ -72,7 +77,7 @@
 
         <div class="layout-content">
             <Row>
-                <i-col span="5">
+                <i-col span="3">
                     <div class="layout-menu">
                         <Menu  width="auto" @on-select="handleTabsAdd" theme="dark">
                             <Submenu v-for="(item,index) in menus" :key="index" :name="index">
@@ -86,7 +91,7 @@
                     </div>
 
                 </i-col>
-                <i-col span="19">
+                <i-col span="21">
                     <div class="layout-content-main">
                         <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
                             <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
@@ -112,6 +117,8 @@
     import contentComponent from './content.vue'
     import contentComponent2 from './content2.vue'
     import tableComponent from './table.vue'
+    import woCreateComponent from './woCreate.vue'
+    import woSearchComponent from './woSearch.vue'
 
     export default {
         
@@ -163,6 +170,25 @@
                         ]
                     },
                     {
+                        title:'交互管理',
+                        name:'cfgManage',
+                        icon:'ios-analytics',
+                        child:[
+                            {
+                                title:'交互1',
+                                name:'dataCfg',
+                                icon:'',
+                                child:{}
+                            },
+                            {
+                                title:'交互2',
+                                name:'logCfg',
+                                icon:'',
+                                child:{}
+                            }
+                        ]
+                    },
+                    {
                         title:'配置管理',
                         name:'cfgManage',
                         icon:'ios-analytics',
@@ -180,13 +206,72 @@
                                 child:{}
                             }
                         ]
+                    },
+                    {
+                        title:'质量管理',
+                        name:'cfgManage',
+                        icon:'ios-analytics',
+                        child:[
+                            {
+                                title:'质量配置',
+                                name:'dataCfg',
+                                icon:'',
+                                child:{}
+                            }
+                        ]
+                    },
+                    {
+                        title:'权限管理',
+                        name:'cfgManage',
+                        icon:'ios-analytics',
+                        child:[
+                            {
+                                title:'权限配置',
+                                name:'dataCfg',
+                                icon:'',
+                                child:{}
+                            }
+                        ]
+                    },
+                    {
+                        title:'流向管理',
+                        name:'cfgManage',
+                        icon:'ios-analytics',
+                        child:[
+                            {
+                                title:'流向配置',
+                                name:'dataCfg',
+                                icon:'',
+                                child:{}
+                            }
+                        ]
+                    },
+                    {
+                        title:'关于',
+                        name:'cfgManage',
+                        icon:'ios-analytics',
+                        child:[
+                            {
+                                title:'关于',
+                                name:'dataCfg',
+                                icon:'',
+                                child:{}
+                            }
+                        ]
                     }
+
                 ],
                 tabs:[
                     {
-                        title:'工单提醒',
-                        name:'woRemaind',
-                        content:'contentView1',
+                        title:'工单创建',
+                        name:'woCreate',
+                        content:'woCreate',
+                        closable:false
+                    },
+                    {
+                        title:'工单查询',
+                        name:'woSearch',
+                        content:'woSearch',
                         closable:false
                     }
                 ],
@@ -198,6 +283,8 @@
             contentView2:contentComponent2,
             '创建工单1':tableComponent,
             '创建工单2':contentComponent2,
+            'woCreate':woCreateComponent,
+            'woSearch':woSearchComponent
         },
         methods: {
             handleTabsAdd(name) {
