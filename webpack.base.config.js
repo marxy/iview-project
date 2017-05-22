@@ -61,6 +61,9 @@ module.exports = {
             }
         ]
     },
+    devServer:{
+        disableHostCheck: true
+    },
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
