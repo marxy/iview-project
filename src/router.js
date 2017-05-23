@@ -4,10 +4,10 @@ const routers = [
         meta: {
             title: ''
         },
-        component: (resolve) => require(['./views/index2.vue'], resolve),
+        component: (resolve) => require(['./views/index.vue'], resolve),
         children:[
         	{
-        		path:'content/:id',
+        		path:'index.html',
         		component:(resolve) => require(['./views/index.vue'], resolve)
         	}
         ]

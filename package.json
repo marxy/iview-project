@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "webpack --progress --config webpack.dev.config.js",
-    "dev": "webpack-dev-server --content-base ./ --open --inline --hot --host 0.0.0.0 --compress --history-api-fallback --config webpack.dev.config.js",
+    "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --history-api-fallback --config webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config webpack.prod.config.js"
   },
   "repository": {
@@ -15,10 +15,11 @@
   "author": "Aresn",
   "license": "MIT",
   "dependencies": {
-    "vue": "^2.2.6",
-    "vue-router": "^2.2.1",
+    "axios": "^0.16.1",
+    "babel-polyfill": "^6.23.0",
     "iview": "^2.0.0-rc.8",
-    "axios": "^0.16.1"
+    "vue": "^2.2.6",
+    "vue-router": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",

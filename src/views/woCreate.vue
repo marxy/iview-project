@@ -5,7 +5,7 @@
 		color: #657180;
 	}
 	#create-condition{
-		margin-top: 30px;
+		margin-top: 35px;
 	}
 	.card{
 		/* background:#eee; */
@@ -26,10 +26,12 @@
 		position: fixed;
 		top: 1px;
 		width: 100%;
-		background: #eee;
-		padding: 3px;
+		background: #fff;
 		/* margin-left: auto;
 		margin-right: auto; */
+	}
+	.action-btn{
+		margin: 0 1px;
 	}
 </style>
 <template>
@@ -301,21 +303,20 @@
 		</div>
 	    <div id="btn-group">
 	    	<Row type="flex" justify="center" align="middle">
-	    		<Col span="12">
-				<Button type="primary" size="small">保存</Button>
-				<Button type="primary" size="small">下送</Button>
-				<Button type="primary" size="small">结案</Button>
-				<Button type="primary" size="small">放弃</Button>
-				<Button type="primary" size="small">接管</Button>
-				<Button type="primary" size="small">备注</Button>
-				<Button type="primary" size="small">来电备注</Button>
-				<Button type="primary" size="small">申请</Button>
-				<Button type="primary" size="small">审批</Button>
-				<Button type="primary" size="small">跟进复核</Button>
-				<Button type="primary" size="small">工单附件</Button>
-				</Col>
+				<Button class="action-btn" type="primary" size="small">保存</Button>
+				<Button class="action-btn" type="primary" size="small">下送</Button>
+				<Button class="action-btn" type="primary" size="small">结案</Button>
+				<Button class="action-btn" type="primary" size="small">放弃</Button>
+				<Button class="action-btn" type="primary" size="small">接管</Button>
+				<Button class="action-btn" type="primary" size="small">备注</Button>
+				<Button class="action-btn" type="primary" size="small">来电备注</Button>
+				<Button class="action-btn" type="primary" size="small">申请</Button>
+				<Button class="action-btn" type="primary" size="small">审批</Button>
+				<Button class="action-btn" type="primary" size="small">跟进复核</Button>
+				<Button class="action-btn" type="primary" size="small">工单附件</Button>
 			</Row>
 		</div>
+		<!-- <Back-top :height="100"></Back-top> -->
     </div>
 </template>
 <script>
