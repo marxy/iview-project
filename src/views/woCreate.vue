@@ -1,7 +1,5 @@
 <style scoped>
 	.create-content{
-		font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-		font-size: 12px;
 		color: #657180;
 	}
 	#create-condition{
@@ -24,18 +22,50 @@
 	}
 	#btn-group{
 		position: fixed;
-		top: 1px;
+		top: 0px;
 		width: 100%;
 		background: #fff;
+		position: absolute\9\0;/* 兼容ie9 ie10 */
 		/* margin-left: auto;
 		margin-right: auto; */
+	}
+	/* 兼容ie11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		#btn-group { 
+			position: absolute; 
+		}
+	}
+	#action-btn-group{
+		background: #fff;
 	}
 	.action-btn{
 		margin: 0 1px;
 	}
 </style>
 <template>
-	<div class="create-content">
+	<div class="create-content" :style="styles">
+		<!-- <Affix>
+		        	<span class="demo-affix">固定在最顶部</span>
+		    	</Affix> -->
+		<!-- <Affix>
+		        	<span class="demo-affix">固定在最顶部</span>
+		    	</Affix>
+		<div id="action-btn-group">
+		
+			    	<Row type="flex" justify="center" align="middle">
+				<Button class="action-btn" type="primary" size="small" @click="clickadd">保存</Button>
+				<Button class="action-btn" type="primary" size="small">下送</Button>
+				<Button class="action-btn" type="primary" size="small">结案</Button>
+				<Button class="action-btn" type="primary" size="small">放弃</Button>
+				<Button class="action-btn" type="primary" size="small">接管</Button>
+				<Button class="action-btn" type="primary" size="small">备注</Button>
+				<Button class="action-btn" type="primary" size="small">来电备注</Button>
+				<Button class="action-btn" type="primary" size="small">申请</Button>
+				<Button class="action-btn" type="primary" size="small">审批</Button>
+				<Button class="action-btn" type="primary" size="small">跟进复核</Button>
+				<Button class="action-btn" type="primary" size="small">工单附件</Button>
+			</Row>
+		</div> -->
 		
 		<div id="create-condition" class="card">
 			<Card>
@@ -303,7 +333,7 @@
 		</div>
 	    <div id="btn-group">
 	    	<Row type="flex" justify="center" align="middle">
-				<Button class="action-btn" type="primary" size="small">保存</Button>
+				<Button class="action-btn" type="primary" size="small" @click="clickadd">保存</Button>
 				<Button class="action-btn" type="primary" size="small">下送</Button>
 				<Button class="action-btn" type="primary" size="small">结案</Button>
 				<Button class="action-btn" type="primary" size="small">放弃</Button>
@@ -524,8 +554,42 @@
                         "title": "状态",
                         "key": "name"
                     }
-                ]
+                ],
+                styles:{}
             }
+        },
+        methods:{
+        	clickadd(){
+        		window.console.log(this.$el);
+        		window.console.log(this.$el.scrollTop);
+        		//window.console.log(this.$el.body.scrollTop);
+        		window.console.log(this.$el.getBoundingClientRect());
+        		this.$Modal.info({
+                    title: 'Bravo',
+                    content: this.value1
+                });
+
+        	},
+        	handleResize(){
+        		const winHeight = window.innerHeight;
+        		const other = 100 + 30 + 32 + 20 + 48 + 5;
+        		const last = winHeight - other;
+        		//window.console.log(last);
+        		this.styles = {
+                    'height': `${last}px`,
+                    'overflow-y': `scroll`
+                };
+                //window.console.log(this.$el.styles);
+        	}
+        },
+        mounted(){
+
+        	this.handleResize();
+        	window.addEventListener('resize', this.handleResize, false);
+        	//window.console.log(this.$el);
+        },
+        beforeDestroy () {
+            window.removeEventListener('resize', this.handleResize, false);
         }
     }
 </script>

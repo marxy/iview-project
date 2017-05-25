@@ -50,7 +50,6 @@
     .layout-content-main{
         padding: 10px;
         /* min-height: 400px; */
-        /* height: 1200px; */
     }
     .layout-copy{
         text-align: center;
@@ -59,13 +58,13 @@
     }
     .component-content{
         /* overflow-y: scroll; */
-        /* overflow-y: scroll;
+        /* overflow-y: scroll; */
         
-        height: 740px; */
+        /* height: 640px; */
     }
     .layout-menu{
         /* background: #464c5b; */
-        /* height: 1200px; */
+        overflow-y: auto;
     }
 </style>
 <template>
@@ -78,7 +77,7 @@
         <div class="layout-content">
             <Row>
                 <i-col span="3">
-                    <div class="layout-menu">
+                    <div class="layout-menu" :style="styles">
                         <Menu  width="auto" @on-select="handleTabsAdd" >
                             <Submenu v-for="(item,index) in menus" :key="index" :name="index">
                                 <template slot="title">
@@ -92,7 +91,7 @@
 
                 </i-col>
                 <i-col span="21">
-                    <div class="layout-content-main">
+                    <div class="layout-content-main" :style="styles">
                         <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
                             <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
                             <div class="component-content">
@@ -106,7 +105,7 @@
                 </i-col>
             </Row>
         </div>
-        <Back-top :height="100"></Back-top>
+        <!-- <Back-top :height="100"></Back-top> -->
         <div class="layout-copy">
             2012-2017 &copy; PJBEST
         </div>
@@ -275,7 +274,8 @@
                         closable:false
                     }
                 ],
-                woCreateTabIndex:0
+                woCreateTabIndex:0,
+                styles:{}
             }
         },
         components:{
@@ -283,6 +283,7 @@
             contentView2:contentComponent2,
             '创建工单1':tableComponent,
             '创建工单2':contentComponent2,
+            '创建工单':woCreateComponent,
             'woCreate':woCreateComponent,
             'woSearch':woSearchComponent
         },
@@ -292,11 +293,15 @@
                 //window.console.log(name);
                 let curView = Math.floor(Math.random()*2) + 1;
                 let tab;
+                if (this.tabs.length > 10) {
+                    this.$Message.warning("标签页不能同时打开10个以前",3);
+                    return;
+                }
                 if (name === "创建工单" ) {
                     tab = {
                         title:name + this.woCreateTabIndex,
                         name:'woCreate',
-                        content:name + curView,
+                        content:name,
                         closable:true
                     };
                     this.woCreateTabIndex++;
@@ -326,6 +331,16 @@
                 }
                 //this['tab' + name] = null;
                 //window.console.log(name);
+            },
+            handleResize(){
+                const winHeight = window.innerHeight;
+                const other = 100 + 30 + 50;
+                const last = winHeight - other;
+                //window.console.log(last);
+                this.styles = {
+                    'height': `${last}px`
+                };
+                //window.console.log(this.$el.styles);
             }
         },
         computed:{
@@ -335,6 +350,14 @@
                 window.console.log(active);
                 return active;
             }
+        },
+        mounted(){
+            this.handleResize();
+            window.addEventListener('resize', this.handleResize, false);
+            //window.console.log(this.$el);
+        },
+        beforeDestroy () {
+            window.removeEventListener('resize', this.handleResize, false);
         }
         
     }
