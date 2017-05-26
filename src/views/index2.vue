@@ -2,40 +2,9 @@
     .layout{
         border: 1px solid #d7dde4;
         background: #f5f7f9;
-    }
-    .layout-logo{
-        width: 100px;
-        height: 30px;
-        background: #fff;
-        border-radius: 3px;
-        float: left;
         position: relative;
-        top: 15px;
-        left: 20px;
-    }
-    .layout-info{
-        width: 100px;
-        height: 60px;
-        background: #fff;
-        border-radius: 3px;
-        float: right;
-        position: relative;
-        top: 15px;
-        right: 20px;
-    }
-    .layout-header{
-        height: 100px;
-        background: #5b6270;
-        box-shadow: 0 1px 1px rgba(0,0,0,.1);
-    }
-    .layout-nav{
-        width: 420px;
-        margin: 0 auto;
-    }
-    .layout-assistant{
-        width: 300px;
-        margin: 0 auto;
-        height: inherit;
+        border-radius: 4px;
+        overflow: hidden;
     }
     .layout-breadcrumb{
         padding: 10px 15px 0;
@@ -49,66 +18,144 @@
     }
     .layout-content-main{
         padding: 10px;
-        /* min-height: 400px; */
     }
     .layout-copy{
         text-align: center;
         padding: 10px 0 20px;
         color: #9ea7b4;
     }
-    .component-content{
-        /* overflow-y: scroll; */
-        /* overflow-y: scroll; */
-        
-        /* height: 640px; */
+    .layout-menu-left{
+        background: #fff;
+    }
+    .layout-header{
+        height: 60px;
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .layout-logo-left{
+        width: 90%;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        margin: 15px auto;
+    }
+    .layout-ceiling-main a{
+        color: #9ba7b5;
+    }
+    /* .layout-hide-text .layout-text{
+        display: none;
+    }
+    .layout-hide-text .sub-menu{
+        display: none;
+    }
+    .layout-hide-text .ivu-menu-submenu-title-icon{
+        display: none;
+    } */
+    .ivu-col{
+        transition: width .2s ease-in-out;
     }
     .layout-menu{
         /* background: #464c5b; */
-        overflow-y: auto;
+    }
+    .hide-text{
+         display: none;
     }
 </style>
 <template>
-    <div class="layout">
-        <div class="layout-header">
-            <div class="layout-logo"></div>
-            <div class="layout-info"></div>
-        </div>
-
-        <div class="layout-content">
-            <Row>
-                <i-col span="3">
-                    <div class="layout-menu" :style="styles">
+    <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
+        <Row type="flex">
+            <i-col :span="spanLeft" class="layout-menu-left">
+                <!-- <Menu active-name="1" theme="dark" width="auto">
+                    <div class="layout-logo-left"></div>
+                    <Menu-item name="1">
+                        <Icon type="ios-navigate" :size="iconSize"></Icon>
+                        <span class="layout-text">选项 1</span>
+                    </Menu-item>
+                    <Menu-item name="2">
+                        <Icon type="ios-keypad" :size="iconSize"></Icon>
+                        <span class="layout-text">选项 2</span>
+                    </Menu-item>
+                    <Menu-item name="3">
+                        <Icon type="ios-analytics" :size="iconSize"></Icon>
+                        <span class="layout-text">选项 3</span>
+                    </Menu-item>
+                </Menu> -->
+                <div class="layout-logo-left"></div>
+                <div class="layout-menu" :style="styles">
+                    <div :class="{'hide-text': spanLeft < 5}">
                         <Menu  width="auto" @on-select="handleTabsAdd" >
                             <Submenu v-for="(item,index) in menus" :key="index" :name="index">
                                 <template slot="title">
-                                    <Icon v-bind:type="item.icon"></Icon>
-                                    {{item.title}}
+                                    <Icon v-bind:type="item.icon" :size="iconSize"></Icon>
+                                    <span class="layout-text">{{item.title}}</span>
                                 </template>
-                                <Menu-item  v-for="(c,i) in item.child"  :key="index + '-' + i" :name="c.title"  >{{c.title}}</Menu-item>
+                                <Menu-item  v-for="(c,i) in item.child"  :key="index + '-' + i" :name="c.title" class="sub-menu" >{{c.title}}</Menu-item>
                             </Submenu>
                         </Menu>
                     </div>
-
-                </i-col>
-                <i-col span="21">
-                    <div class="layout-content-main" :style="styles">
-                        <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
-                            <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
-                            <div class="component-content">
-                                <component v-bind:is="tab.content">
-                                  <!-- 组件在 vm.currentview 变化时改变！ -->
-                                </component>
-                            </div>
-                            </Tab-pane>
-                        </Tabs>
+                    <div :class="{'hide-text': spanLeft >= 5}">
+                        <Menu  width="auto" >
+                            <Menu-item  v-for="(item,index) in menus" :name="item.title">
+                                <Dropdown  @on-click="handleTabsAdd" trigger="hover" placement="right-start">
+                                    <Icon v-bind:type="item.icon" :size="iconSize"></Icon>
+                                    <Dropdown-menu slot="list">
+                                        <Dropdown-item  v-for="(c,i) in item.child">{{c.title}}</Dropdown-item>
+                                    </Dropdown-menu>
+                                </Dropdown>
+                            </Menu-item>
+                        </Menu>
                     </div>
-                </i-col>
-            </Row>
-        </div>
-        <!-- <Back-top :height="100"></Back-top> -->
-        <div class="layout-copy">
-            2012-2017 &copy; PJBEST
-        </div>
+                    <!-- <Menu  width="auto" @on-select="handleTabsAdd" >
+                        <Submenu v-for="(item,index) in menus" :key="index" :name="index">
+                            <template slot="title">
+                                <Icon v-bind:type="item.icon" :size="iconSize"></Icon>
+                                <span class="layout-text">{{item.title}}</span>
+                            </template>
+                            <Menu-item  v-for="(c,i) in item.child"  :key="index + '-' + i" :name="c.title" class="sub-menu" >{{c.title}}</Menu-item>
+                        </Submenu>
+                    </Menu> -->
+                </div>
+            </i-col>
+            <i-col :span="spanRight">
+                <!-- <div class="layout-header">
+                    <i-button type="text" @click="toggleClick">
+                        <Icon type="navicon" size="32"></Icon>
+                    </i-button>
+                </div>
+                <div class="layout-breadcrumb">
+                    <Breadcrumb>
+                        <Breadcrumb-item href="#">首页</Breadcrumb-item>
+                        <Breadcrumb-item href="#">应用中心</Breadcrumb-item>
+                        <Breadcrumb-item>某应用</Breadcrumb-item>
+                    </Breadcrumb>
+                </div>
+                <div class="layout-content">
+                    <div class="layout-content-main">内容区域</div>
+                </div>
+                <div class="layout-copy">
+                    2011-2016 &copy; TalkingData
+                </div> -->
+                <div class="layout-header">
+                    <i-button type="text" @click="toggleClick">
+                        <Icon type="navicon" size="32"></Icon>
+                    </i-button>
+                </div>
+                <div class="layout-content-main" :style="styles">
+                    <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
+                        <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
+                        <div class="component-content">
+                            <component v-bind:is="tab.content">
+                              <!-- 组件在 vm.currentview 变化时改变！ -->
+                            </component>
+                        </div>
+                        </Tab-pane>
+                    </Tabs>
+                </div>
+                <div class="layout-copy">
+                    2012-2017 &copy; PJBEST
+                </div>
+            </i-col>
+        </Row>
     </div>
 </template>
 <script>
@@ -120,9 +167,10 @@
     import woSearchComponent from './woSearch.vue'
 
     export default {
-        
-        data(){
+        data () {
             return {
+                spanLeft: 5,
+                spanRight: 19,
                 menus:[
                     {
                         title:'工单管理',
@@ -279,16 +327,21 @@
                 styles:{}
             }
         },
-        components:{
-            contentView1:contentComponent,
-            contentView2:contentComponent2,
-            '创建工单1':tableComponent,
-            '创建工单2':contentComponent2,
-            '创建工单':woCreateComponent,
-            'woCreate':woCreateComponent,
-            'woSearch':woSearchComponent
+        computed: {
+            iconSize () {
+                return this.spanLeft === 5 ? 20 : 36;
+            }
         },
         methods: {
+            toggleClick () {
+                if (this.spanLeft === 5) {
+                    this.spanLeft = 2;
+                    this.spanRight = 22;
+                } else {
+                    this.spanLeft = 5;
+                    this.spanRight = 19;
+                }
+            },
             handleTabsAdd(name) {
                 //var cur = this.tabs;
                 //window.console.log(name);
@@ -337,7 +390,7 @@
             },
             handleResize(){
                 const winHeight = window.innerHeight;
-                const other = 100 + 30 + 50;
+                const other = 60 + 50;
                 const last = winHeight - other;
                 //window.console.log(last);
                 this.styles = {
@@ -351,8 +404,14 @@
                 return activeTab;
             }
         },
-        computed:{
-
+        components:{
+            contentView1:contentComponent,
+            contentView2:contentComponent2,
+            '创建工单1':tableComponent,
+            '创建工单2':contentComponent2,
+            '创建工单':woCreateComponent,
+            'woCreate':woCreateComponent,
+            'woSearch':woSearchComponent
         },
         mounted(){
             this.handleResize();
@@ -362,6 +421,5 @@
         beforeDestroy () {
             window.removeEventListener('resize', this.handleResize, false);
         }
-        
     }
 </script>
