@@ -95,9 +95,10 @@
                         <Tabs type="card" closable @on-tab-remove="handleTabRemove" v-model:value="activeTab">
                             <Tab-pane v-for="(tab,it) in tabs" :key="tab" :name="tab.title" :closable="tab.closable" :label="tab.title">
                             <div class="component-content">
-                                <component v-bind:is="tab.content">
-                                  <!-- 组件在 vm.currentview 变化时改变！ -->
-                                </component>
+                                <router-view :name="tab.name"></router-view>
+                               <!--  <component v-bind:is="tab.content">
+                                  组件在 vm.currentview 变化时改变！
+                                </component> -->
                             </div>
                             </Tab-pane>
                         </Tabs>
@@ -261,12 +262,6 @@
 
                 ],
                 tabs:[
-                    {
-                        title:'工单创建',
-                        name:'woCreate',
-                        content:'woCreate',
-                        closable:false
-                    }
                 ],
                 woCreateTabIndex:0,
                 activeTab:"",
@@ -318,6 +313,15 @@
 
                 this.tabs.push(tab);
                 this.activeTab = this.computedActiveTab();
+
+                const router = this.$router;
+                window.console.log(tab.name)
+                router.push("/b/main");
+                // Vue.nextTick(function () {
+                //   // DOM 更新了
+                //   router.push("/b/"+tab.name);
+                //     //this.$router.push(tab.name);
+                // });
             },
             handleTabRemove (name) {
                 for (let i = this.tabs.length - 1; i >= 0; i--) {

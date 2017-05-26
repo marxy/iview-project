@@ -203,9 +203,9 @@
 					    </Checkbox-group>
 	            	</Col>
 	            	<Col  span="12" class="card-col">
-		            	<Button type="primary" size="small">查询</Button>
-		            	<Button type="primary" size="small">派单</Button>
-		            	<Button type="primary" size="small">结案</Button>
+		            	<Button type="primary" >查询</Button>
+		            	<Button type="primary" >派单</Button>
+		            	<Button type="primary" >结案</Button>
 	            	</Col>
 	            </Row>
 	            

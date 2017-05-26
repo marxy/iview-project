@@ -76,7 +76,7 @@
 			    <label>收货人电话：</label>
 			    <Input v-model="value2" class="text-input" size="small"  placeholder="收货人电话"></Input>
 			    <label>寄件人电话：</label><Input v-model="value3" class="text-input" size="small" placeholder="寄件人电话"></Input>
-			    <Button type="primary" size="small">查询</Button>
+			    <Button type="primary">查询</Button>
 	            </p>
 	        </Card>
 		</div>
@@ -333,17 +333,17 @@
 		</div>
 	    <div id="btn-group">
 	    	<Row type="flex" justify="center" align="middle">
-				<Button class="action-btn" type="primary" size="small" @click="clickadd">保存</Button>
-				<Button class="action-btn" type="primary" size="small">下送</Button>
-				<Button class="action-btn" type="primary" size="small">结案</Button>
-				<Button class="action-btn" type="primary" size="small">放弃</Button>
-				<Button class="action-btn" type="primary" size="small">接管</Button>
-				<Button class="action-btn" type="primary" size="small">备注</Button>
-				<Button class="action-btn" type="primary" size="small">来电备注</Button>
-				<Button class="action-btn" type="primary" size="small">申请</Button>
-				<Button class="action-btn" type="primary" size="small">审批</Button>
-				<Button class="action-btn" type="primary" size="small">跟进复核</Button>
-				<Button class="action-btn" type="primary" size="small">工单附件</Button>
+				<Button class="action-btn" type="primary" @click="clickadd">保存</Button>
+				<Button class="action-btn" type="primary" >下送</Button>
+				<Button class="action-btn" type="primary" >结案</Button>
+				<Button class="action-btn" type="primary" >放弃</Button>
+				<Button class="action-btn" type="primary" >接管</Button>
+				<Button class="action-btn" type="primary" >备注</Button>
+				<Button class="action-btn" type="primary" >来电备注</Button>
+				<Button class="action-btn" type="primary" >申请</Button>
+				<Button class="action-btn" type="primary" >审批</Button>
+				<Button class="action-btn" type="primary" >跟进复核</Button>
+				<Button class="action-btn" type="primary" >工单附件</Button>
 			</Row>
 		</div>
 		<!-- <Back-top :height="100"></Back-top> -->
