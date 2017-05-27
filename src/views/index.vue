@@ -112,7 +112,7 @@
     </div>
 </template>
 <script>
-    import Vue from 'vue';
+    import axios from 'axios'
     import contentComponent from './content.vue'
     import contentComponent2 from './content2.vue'
     import tableComponent from './table.vue'
@@ -120,154 +120,16 @@
     import woSearchComponent from './woSearch.vue'
 
     export default {
-        
+        created(){
+            axios.get('src/views/data/index.json').then((res) =>{
+                this.menus = res.data.menus;
+                this.tabs = res.data.tabs;
+            });
+        },
         data(){
             return {
-                menus:[
-                    {
-                        title:'工单管理',
-                        name:'woManage',
-                        icon:'ios-navigate',
-                        child:[
-                            {
-                                title:'创建工单',
-                                name:'woCreate',
-                                icon:'',
-                                child:{}
-                            },
-                            {
-                                title:'工单查询',
-                                name:'woSearch',
-                                icon:'',
-                                child:{}
-                            },
-                            {
-                                title:'工单导出',
-                                name:'woExport',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'信息管理',
-                        name:'infoManage',
-                        icon:'ios-keypad',
-                        child:[
-                            {
-                                title:'用户管理',
-                                name:'userManage',
-                                icon:'',
-                                child:{}
-                            },
-                            {
-                                title:'分类管理',
-                                name:'calassifyManage',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'交互管理',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'交互1',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            },
-                            {
-                                title:'交互2',
-                                name:'logCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'配置管理',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'数据配置',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            },
-                            {
-                                title:'日志配置',
-                                name:'logCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'质量管理',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'质量配置',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'权限管理',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'权限配置',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'流向管理',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'流向配置',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    },
-                    {
-                        title:'关于',
-                        name:'cfgManage',
-                        icon:'ios-analytics',
-                        child:[
-                            {
-                                title:'关于',
-                                name:'dataCfg',
-                                icon:'',
-                                child:{}
-                            }
-                        ]
-                    }
-
-                ],
-                tabs:[
-                    {
-                        title:'工单创建',
-                        name:'woCreate',
-                        content:'woCreate',
-                        closable:false
-                    }
-                ],
+                menus:[],
+                tabs:[],
                 woCreateTabIndex:0,
                 activeTab:"",
                 styles:{}

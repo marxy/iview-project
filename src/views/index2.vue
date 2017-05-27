@@ -42,7 +42,7 @@
     .layout-ceiling-main a{
         color: #9ba7b5;
     }
-    /* .layout-hide-text .layout-text{
+    .layout-hide-text .layout-text{
         display: none;
     }
     .layout-hide-text .sub-menu{
@@ -50,7 +50,7 @@
     }
     .layout-hide-text .ivu-menu-submenu-title-icon{
         display: none;
-    } */
+    } 
     .ivu-col{
         transition: width .2s ease-in-out;
     }
@@ -82,7 +82,7 @@
                 </Menu> -->
                 <div class="layout-logo-left"></div>
                 <div class="layout-menu" :style="styles">
-                    <div :class="{'hide-text': spanLeft < 5}">
+                    <div>
                         <Menu  width="auto" @on-select="handleTabsAdd" >
                             <Submenu v-for="(item,index) in menus" :key="index" :name="index">
                                 <template slot="title">
@@ -93,7 +93,7 @@
                             </Submenu>
                         </Menu>
                     </div>
-                    <div :class="{'hide-text': spanLeft >= 5}">
+                    <!-- <div :class="{'hide-text': spanLeft >= 5}">
                         <Menu  width="auto" >
                             <Menu-item  v-for="(item,index) in menus" :name="item.title">
                                 <Dropdown  @on-click="handleTabsAdd" trigger="hover" placement="right-start">
@@ -104,7 +104,7 @@
                                 </Dropdown>
                             </Menu-item>
                         </Menu>
-                    </div>
+                    </div> -->
                     <!-- <Menu  width="auto" @on-select="handleTabsAdd" >
                         <Submenu v-for="(item,index) in menus" :key="index" :name="index">
                             <template slot="title">

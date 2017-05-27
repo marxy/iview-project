@@ -11,7 +11,7 @@
 	export default{
 		data(){
 			return{
-				greeting:"Hello",
+				greeting:"Hello a",
 				message:"",
 			}
 		},
