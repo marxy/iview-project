@@ -23,6 +23,20 @@ const routers = [
         component: (resolve) => require(['./views/index2.vue'], resolve)
     },
     {
+        path: '/i',
+        meta: {
+            title: ''
+        },
+        component: (resolve) => require(['./views/index_test.vue'], resolve)
+    },
+    {
+        path: '/tabs',
+        meta: {
+            title: ''
+        },
+        component: (resolve) => require(['./views/tabs.vue'], resolve)
+    },
+    {
         path: '/test',
         meta: {
             title: ''
